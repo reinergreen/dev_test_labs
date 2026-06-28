@@ -1,0 +1,35 @@
+digraph G {
+  graph [rankdir=LR, bgcolor="white", label="Diagrama de Casos de Uso - Raízes do Nordeste", labelloc=t, fontsize=20];
+  node [fontname="Arial", fontsize=10];
+  edge [fontname="Arial", fontsize=9];
+
+  Cliente [shape=box, label="Cliente\n(App/Web/Totem)"];
+  Atendente [shape=box, label="Atendente\n(Balcão)"];
+  Cozinha [shape=box, label="Cozinha"];
+  Gerente [shape=box, label="Gerente/Admin"];
+  Gateway [shape=box, label="Gateway de\nPagamento Mock"];
+
+  Login [shape=ellipse, label="Autenticar usuário"];
+  Cardapio [shape=ellipse, label="Consultar cardápio\npor unidade"];
+  Pedido [shape=ellipse, label="Realizar pedido\ncom canalPedido"];
+  Pagamento [shape=ellipse, label="Solicitar pagamento\nmock"];
+  Status [shape=ellipse, label="Atualizar status\ndo pedido"];
+  Estoque [shape=ellipse, label="Controlar estoque\npor unidade"];
+  Fidelidade [shape=ellipse, label="Consultar/resgatar\nfidelidade"];
+  Auditoria [shape=ellipse, label="Consultar logs\nde auditoria"];
+  Produtos [shape=ellipse, label="Gerenciar produtos\ne cardápio"];
+
+  Cliente -> Login;
+  Cliente -> Cardapio;
+  Cliente -> Pedido;
+  Cliente -> Pagamento;
+  Cliente -> Fidelidade;
+  Atendente -> Pedido;
+  Atendente -> Estoque;
+  Cozinha -> Status;
+  Gerente -> Produtos;
+  Gerente -> Estoque;
+  Gerente -> Auditoria;
+  Gerente -> Status;
+  Pagamento -> Gateway [label="integração simulada"];
+}

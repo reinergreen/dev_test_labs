@@ -1,0 +1,21 @@
+digraph G {
+  graph [rankdir=LR, bgcolor="white", label="Sequência - Pedido, pagamento mock e status", labelloc=t, fontsize=20];
+  node [shape=box, fontname="Arial", fontsize=9];
+  edge [fontname="Arial", fontsize=9];
+
+  Cliente -> API [label="POST /pedidos com canalPedido"];
+  API -> PedidoService [label="validar dados"];
+  PedidoService -> EstoqueService [label="verificar/debitar estoque"];
+  EstoqueService -> Banco [label="salvar saída de estoque"];
+  PedidoService -> Banco [label="criar pedido e itens"];
+  PedidoService -> Auditoria [label="log criação"];
+  Cliente -> API [label="POST /pagamentos/mock"];
+  API -> PagamentoMock [label="simular gateway"];
+  PagamentoMock -> Banco [label="registrar pagamento"];
+  PagamentoMock -> PedidoService [label="atualizar status PAGO/RECUSADO"];
+  PagamentoMock -> Fidelidade [label="creditar pontos se consentiu"];
+  Cozinha -> API [label="PATCH /pedidos/{id}/status"];
+  API -> PedidoService [label="validar transição"];
+  PedidoService -> Banco [label="salvar novo status"];
+  PedidoService -> Auditoria [label="log mudança status"];
+}

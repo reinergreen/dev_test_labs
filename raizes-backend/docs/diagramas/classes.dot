@@ -1,0 +1,25 @@
+digraph G {
+  graph [rankdir=LR, bgcolor="white", label="Diagrama de Classes - Domínio", labelloc=t, fontsize=20];
+  node [shape=record, fontname="Arial", fontsize=9];
+  edge [fontname="Arial", fontsize=9];
+
+  Usuario [label="{Usuario|id: int\lnome: str\lemail: str\lperfil: Perfil\lconsentimento_fidelidade: bool\l}"];
+  Unidade [label="{Unidade|id: int\lnome: str\lcidade: str\lativa: bool\l}"];
+  Produto [label="{Produto|id: int\lnome: str\lpreco: decimal\lativo: bool\l}"];
+  Estoque [label="{Estoque|quantidade: int\l+movimentar()\l}"];
+  Pedido [label="{Pedido|canalPedido: enum\lstatus: enum\ltotal: decimal\l+calcularTotal()\l}"];
+  PedidoItem [label="{PedidoItem|quantidade: int\lprecoUnitario: decimal\l+subtotal()\l}"];
+  Pagamento [label="{Pagamento|forma: enum\lstatus: enum\ltransacaoId: uuid\l}"];
+  HistoricoPontos [label="{HistoricoPontos|tipo: enum\lpontos: int\ldescricao: str\l}"];
+  LogAuditoria [label="{LogAuditoria|acao: str\lentidade: str\ldetalhes: json\l}"];
+
+  Usuario -> Pedido [label="realiza"];
+  Unidade -> Pedido [label="recebe"];
+  Pedido -> PedidoItem [label="possui"];
+  PedidoItem -> Produto [label="referencia"];
+  Produto -> Estoque [label="tem saldo"];
+  Unidade -> Estoque [label="por unidade"];
+  Pedido -> Pagamento [label="gera"];
+  Usuario -> HistoricoPontos [label="acumula"];
+  Usuario -> LogAuditoria [label="gera"];
+}

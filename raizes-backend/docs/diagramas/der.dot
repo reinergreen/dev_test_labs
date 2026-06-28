@@ -1,0 +1,30 @@
+digraph G {
+  graph [rankdir=LR, bgcolor="white", label="DER simplificado - Raízes do Nordeste", labelloc=t, fontsize=20];
+  node [shape=record, fontname="Arial", fontsize=9];
+  edge [fontname="Arial", fontsize=9];
+
+  Usuario [label="{usuarios_usuario|PK id\lnome\lemail UNIQUE\lperfil\ltelefone\lconsentimento_fidelidade\l}"];
+  Unidade [label="{unidades_unidade|PK id\lnome\lcidade\lendereco\lativa\l}"];
+  Produto [label="{produtos_produto|PK id\lnome\lcategoria\lpreco\lativo\l}"];
+  Cardapio [label="{produtos_cardapioitem|PK id\lFK unidade_id\lFK produto_id\lpreco_override\ldisponivel\l}"];
+  Estoque [label="{estoque_estoque|PK id\lFK unidade_id\lFK produto_id\lquantidade\l}"];
+  Mov [label="{estoque_movimentacaoestoque|PK id\lFK estoque_id\ltipo\lquantidade\lmotivo\lFK usuario_id\l}"];
+  Pedido [label="{pedidos_pedido|PK id\lFK cliente_id\lFK unidade_id\lcanal_pedido\lstatus\ltotal\l}"];
+  Item [label="{pedidos_pedidoitem|PK id\lFK pedido_id\lFK produto_id\lquantidade\lpreco_unitario\l}"];
+  Pagamento [label="{pagamentos_pagamento|PK id\lFK pedido_id\lforma\lstatus\ltransacao_id\lpayload_retorno\l}"];
+  Pontos [label="{fidelidade_historicopontos|PK id\lFK usuario_id\ltipo\lpontos\ldescricao\lpedido_id\l}"];
+  Log [label="{auditoria_logauditoria|PK id\lFK usuario_id\lacao\lentidade\lentidade_id\ldetalhes\l}"];
+
+  Usuario -> Pedido [label="1:N cliente"];
+  Unidade -> Pedido [label="1:N"];
+  Pedido -> Item [label="1:N"];
+  Produto -> Item [label="1:N"];
+  Pedido -> Pagamento [label="1:N"];
+  Unidade -> Cardapio [label="1:N"];
+  Produto -> Cardapio [label="1:N"];
+  Unidade -> Estoque [label="1:N"];
+  Produto -> Estoque [label="1:N"];
+  Estoque -> Mov [label="1:N"];
+  Usuario -> Pontos [label="1:N"];
+  Usuario -> Log [label="1:N"];
+}
